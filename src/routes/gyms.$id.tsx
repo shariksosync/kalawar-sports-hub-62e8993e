@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Clock, Star, Check } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/site/PageShell";
 import { useStore } from "@/lib/store";
@@ -30,7 +29,7 @@ function GymDetail() {
           <aside className="glass h-fit rounded-2xl p-6">
             <div className="text-sm text-muted-foreground">Memberships from</div>
             <div className="font-display text-5xl text-primary">₹{g.priceFrom.toLocaleString("en-IN")}<span className="text-base text-muted-foreground">/mo</span></div>
-            <Button size="lg" className="mt-6 w-full rounded-full" onClick={() => toast.success("Enquiry sent! The gym will call you shortly.")}>Book a free trial</Button>
+            <Button asChild size="lg" className="mt-6 w-full rounded-full"><a href={`tel:${g.phone}`}>Call for a free trial</a></Button>
             <a href={`tel:${g.phone}`} className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground"><Phone className="h-4 w-4" />{g.phone}</a>
           </aside>
         </div>
