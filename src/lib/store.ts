@@ -55,11 +55,24 @@ export function setState(fn: (s: State) => Partial<State>) {
   emit();
 }
 
+const subscribe = (l: () => void) => { listeners.add(l); return () => { listeners.delete(l); }; };
+
 export function useStore<T>(sel: (s: State) => T): T {
+  const cache = useRef<{ s?: State; v?: T; ss?: State; sv?: T }>({});
+  const selRef = useRef(sel);
+  selRef.current = sel;
   return useSyncExternalStore(
-    (l) => { listeners.add(l); return () => listeners.delete(l); },
-    () => sel(state),
-    () => sel(serverState),
+    subscribe,
+    () => {
+      const c = cache.current;
+      if (c.s !== state) { c.s = state; c.v = selRef.current(state); }
+      return c.v as T;
+    },
+    () => {
+      const c = cache.current;
+      if (c.ss !== serverState) { c.ss = serverState; c.sv = selRef.current(serverState); }
+      return c.sv as T;
+    },
   );
 }
 export const useHydrated = () => useSyncExternalStore((l) => { listeners.add(l); return () => listeners.delete(l); }, () => hydrated, () => false);
