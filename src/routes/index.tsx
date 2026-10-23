@@ -10,7 +10,7 @@ import { PostThumbnail } from "@/components/media/PostThumbnail";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
+    meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, 
       { title: "Kalawar Hub — Martial Arts, Gyms, Academies & Athlete Media" },
       { name: "description", content: "Discover Kalawar championships, premium gyms, top sports academies and a media community for athletes." },
       { property: "og:title", content: "Kalawar Hub" },

@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/site/LoginForm";
 import { IMAGES } from "@/lib/data";
 
 export const Route = createFileRoute("/academies/login")({
-  head: () => ({ meta: [{ title: "Academy Partner Login — Kalawar Hub" }, { name: "description", content: "Sign in to manage students, batches, coaches, fees and events." }, { property: "og:title", content: "Academy Partner Login" }, { property: "og:description", content: "Access your academy admin panel." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Academy Partner Login — Kalawar Hub" }, { name: "description", content: "Sign in to manage students, batches, coaches, fees and events." }, { property: "og:title", content: "Academy Partner Login" }, { property: "og:description", content: "Access your academy admin panel." }] }),
   component: () => (
     <PageShell>
       <AuthCard title="Academy partner login" subtitle="Manage students, batches, coaches, fees and events." aside={IMAGES.academy}>

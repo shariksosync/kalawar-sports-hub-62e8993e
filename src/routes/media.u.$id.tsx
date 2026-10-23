@@ -15,7 +15,7 @@ import { updateAccount, useMe, useStore, followStatus } from "@/lib/store";
 import { PostThumbnail } from "@/components/media/PostThumbnail";
 
 export const Route = createFileRoute("/media/u/$id")({
-  head: () => ({ meta: [{ title: "Profile — Kalawar Media" }, { name: "description", content: "Athlete profile, posts, followers and following on Kalawar Media." }, { property: "og:title", content: "Profile — Kalawar Media" }, { property: "og:description", content: "Athlete profile on Kalawar Media." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Profile — Kalawar Media" }, { name: "description", content: "Athlete profile, posts, followers and following on Kalawar Media." }, { property: "og:title", content: "Profile — Kalawar Media" }, { property: "og:description", content: "Athlete profile on Kalawar Media." }] }),
   component: Profile,
 });
 

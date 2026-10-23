@@ -6,7 +6,7 @@ import { PageShell } from "@/components/site/PageShell";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/gyms/$id")({
-  head: () => ({ meta: [{ title: "Gym details — Kalawar Hub" }, { name: "description", content: "Facilities, timings and membership plans for this gym." }, { property: "og:title", content: "Gym details — Kalawar Hub" }, { property: "og:description", content: "Facilities, timings and membership plans." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Gym details — Kalawar Hub" }, { name: "description", content: "Facilities, timings and membership plans for this gym." }, { property: "og:title", content: "Gym details — Kalawar Hub" }, { property: "og:description", content: "Facilities, timings and membership plans." }] }),
   component: GymDetail,
 });
 

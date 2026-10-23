@@ -9,7 +9,7 @@ import { IMAGES } from "@/lib/data";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/gyms/")({
-  head: () => ({ meta: [{ title: "GYM & Fitness Clubs — Kalawar Hub" }, { name: "description", content: "Browse registered gyms and fitness clubs, compare facilities and membership prices, or join as a partner." }, { property: "og:title", content: "GYM & Fitness — Kalawar Hub" }, { property: "og:description", content: "Find verified gyms and fitness clubs near you." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "GYM & Fitness Clubs — Kalawar Hub" }, { name: "description", content: "Browse registered gyms and fitness clubs, compare facilities and membership prices, or join as a partner." }, { property: "og:title", content: "GYM & Fitness — Kalawar Hub" }, { property: "og:description", content: "Find verified gyms and fitness clubs near you." }] }),
   component: GymList,
 });
 

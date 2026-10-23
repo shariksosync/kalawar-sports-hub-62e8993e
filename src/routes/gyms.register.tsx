@@ -11,7 +11,7 @@ import { IMAGES } from "@/lib/data";
 import { registerGym } from "@/lib/store";
 
 export const Route = createFileRoute("/gyms/register")({
-  head: () => ({ meta: [{ title: "Register your Gym — Kalawar Hub" }, { name: "description", content: "List your gym on Kalawar Hub and get your own admin panel for members, subscriptions, staff and revenue." }, { property: "og:title", content: "Register your Gym" }, { property: "og:description", content: "Join Kalawar Hub as a gym partner." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Register your Gym — Kalawar Hub" }, { name: "description", content: "List your gym on Kalawar Hub and get your own admin panel for members, subscriptions, staff and revenue." }, { property: "og:title", content: "Register your Gym" }, { property: "og:description", content: "Join Kalawar Hub as a gym partner." }] }),
   component: GymRegister,
 });
 

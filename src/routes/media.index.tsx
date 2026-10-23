@@ -9,7 +9,7 @@ import { canViewPosts, useMe, useStore } from "@/lib/store";
 import { PostThumbnail } from "@/components/media/PostThumbnail";
 
 export const Route = createFileRoute("/media/")({
-  head: () => ({ meta: [{ title: "Media — Kalawar Hub" }, { name: "description", content: "Watch training clips and match highlights, follow athletes, gyms and academies." }, { property: "og:title", content: "Kalawar Media" }, { property: "og:description", content: "Videos and photos from the sports community." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Media — Kalawar Hub" }, { name: "description", content: "Watch training clips and match highlights, follow athletes, gyms and academies." }, { property: "og:title", content: "Kalawar Media" }, { property: "og:description", content: "Videos and photos from the sports community." }] }),
   component: MediaHome,
 });
 

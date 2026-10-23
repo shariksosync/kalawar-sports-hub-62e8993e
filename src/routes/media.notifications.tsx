@@ -6,7 +6,7 @@ import { UserChip } from "@/components/media/MediaBits";
 import { markNoticesRead, respondRequest, useMe, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/media/notifications")({
-  head: () => ({ meta: [{ title: "Notifications — Kalawar Media" }, { name: "description", content: "Follow requests and activity on your Kalawar Media account." }, { property: "og:title", content: "Notifications — Kalawar Media" }, { property: "og:description", content: "Your Kalawar Media activity." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Notifications — Kalawar Media" }, { name: "description", content: "Follow requests and activity on your Kalawar Media account." }, { property: "og:title", content: "Notifications — Kalawar Media" }, { property: "og:description", content: "Your Kalawar Media activity." }] }),
   component: Notifications,
 });
 

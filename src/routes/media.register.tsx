@@ -11,7 +11,7 @@ import { IMAGES, KALAWAR_ROLES } from "@/lib/data";
 import { registerAccount } from "@/lib/store";
 
 export const Route = createFileRoute("/media/register")({
-  head: () => ({ meta: [{ title: "Join Kalawar Media" }, { name: "description", content: "Create a Kalawar Media account to upload, like, comment and follow athletes." }, { property: "og:title", content: "Join Kalawar Media" }, { property: "og:description", content: "Create your athlete media account." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Join Kalawar Media" }, { name: "description", content: "Create a Kalawar Media account to upload, like, comment and follow athletes." }, { property: "og:title", content: "Join Kalawar Media" }, { property: "og:description", content: "Create your athlete media account." }] }),
   component: MediaRegister,
 });
 

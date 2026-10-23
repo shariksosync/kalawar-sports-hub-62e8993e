@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IMAGES } from "@/lib/data";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Sign in — Kalawar Hub" }, { name: "description", content: "Sign in to your Media, GYM & Fitness, Sports Academy or Kalawar account." }, { property: "og:title", content: "Sign in — Kalawar Hub" }, { property: "og:description", content: "One login for every Kalawar Hub portal." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Sign in — Kalawar Hub" }, { name: "description", content: "Sign in to your Media, GYM & Fitness, Sports Academy or Kalawar account." }, { property: "og:title", content: "Sign in — Kalawar Hub" }, { property: "og:description", content: "One login for every Kalawar Hub portal." }] }),
   component: () => (
     <PageShell>
       <AuthCard title="Sign in" subtitle="One account across Kalawar Hub. Choose your portal." aside={IMAGES.champ}>

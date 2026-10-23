@@ -11,7 +11,7 @@ import { IMAGES } from "@/lib/data";
 import { registerAcademy } from "@/lib/store";
 
 export const Route = createFileRoute("/academies/register")({
-  head: () => ({ meta: [{ title: "Register your Sports Academy — Kalawar Hub" }, { name: "description", content: "List your sports academy and manage students, batches, coaches and fees from your own admin panel." }, { property: "og:title", content: "Register your Sports Academy" }, { property: "og:description", content: "Join Kalawar Hub as an academy partner." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Register your Sports Academy — Kalawar Hub" }, { name: "description", content: "List your sports academy and manage students, batches, coaches and fees from your own admin panel." }, { property: "og:title", content: "Register your Sports Academy" }, { property: "og:description", content: "Join Kalawar Hub as an academy partner." }] }),
   component: AcademyRegister,
 });
 
