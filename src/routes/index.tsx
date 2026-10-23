@@ -31,12 +31,12 @@ function PortalBox({ p }: { p: (typeof portals)[number] }) {
   const inner = (
     <>
       <p.icon className="h-7 w-7 text-primary" />
-      <div className="mt-4 font-display text-2xl tracking-wide">{p.title}</div>
+       <div className="mt-3 font-display text-2xl tracking-wide lg:mt-4">{p.title}</div>
       <p className="mt-1 text-xs text-muted-foreground">{p.text}</p>
       <ArrowRight className="absolute right-4 top-4 h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
     </>
   );
-  const cls = "group glass relative block rounded-xl p-5 transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-gold";
+  const cls = "group glass relative block rounded-xl p-4 lg:p-5 transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-gold";
   return p.external ? <a href={p.href} target="_blank" rel="noreferrer" className={cls}>{inner}</a> : p.to ? <Link to={p.to} className={cls}>{inner}</Link> : null;
 }
 
@@ -55,7 +55,7 @@ function SlideText({ eyebrow, title, text, cta }: { eyebrow: string; title: Reac
   return (
     <div className="max-w-xl">
       <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">{eyebrow}</p>
-      <h2 className="mt-3 font-display text-6xl leading-[0.95] tracking-wide md:text-7xl">{title}</h2>
+      <h2 className="mt-3 font-display text-5xl leading-[0.95] tracking-wide sm:text-6xl md:text-7xl">{title}</h2>
       <p className="mt-4 text-muted-foreground">{text}</p>
       <div className="mt-8 flex flex-wrap gap-3">{cta}</div>
     </div>
@@ -76,9 +76,9 @@ function Hero() {
   return (
     <section className="relative">
       <div ref={ref} className="overflow-hidden">
-        <div className="flex h-[760px] sm:h-[640px]">
+        <div className="flex h-[700px] sm:h-[640px]">
           <Slide image={IMAGES.hero}>
-            <div className="grid w-full items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+            <div className="grid w-full items-center gap-6 pb-12 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:pb-0">
               <SlideText eyebrow="Welcome to Kalawar Hub" title={<>Train. Compete.<br /><span className="text-gradient-gold">Get seen.</span></>} text="One platform for martial arts championships, fitness clubs, sports academies and the athletes who make them great." cta={<><Button asChild size="lg" className="rounded-full"><Link to="/media">Explore Media</Link></Button><Button asChild size="lg" variant="outline" className="rounded-full"><Link to="/gyms/register">Become a partner</Link></Button></>} />
               <div className="grid grid-cols-2 gap-4 lg:max-w-md lg:justify-self-end">
                 {portals.map((p) => <PortalBox key={p.title} p={p} />)}
