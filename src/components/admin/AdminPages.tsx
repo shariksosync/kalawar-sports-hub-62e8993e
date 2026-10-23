@@ -116,7 +116,7 @@ export function Reports({ kind }: { kind: "gym" | "academy" }) {
       <div className="grid gap-4 sm:grid-cols-3">
         <Kpi label="Revenue" value={inr(total)} hint={`${rows.length} transactions`} icon={IndianRupee} />
         <Kpi label={kind === "gym" ? "Expenses" : "Monthly payroll"} value={inr(expenses)} icon={UserCog} />
-        <Kpi label="Net" value={inr(total - expenses)} icon={Wallet} />
+        {kind === "gym" && <Kpi label="Net" value={inr(total - expenses)} icon={Wallet} />}
       </div>
       <div className="mt-6 grid gap-6 xl:grid-cols-2">
         <div className="rounded-2xl border border-border bg-card p-5"><div className="mb-4 font-display text-2xl tracking-wide">Monthly revenue</div>

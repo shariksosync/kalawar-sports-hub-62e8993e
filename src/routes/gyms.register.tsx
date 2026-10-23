@@ -26,7 +26,7 @@ function GymRegister() {
 
   const submit = () => {
     const r = registerGym(
-      { email: f.email, password: f.password, name: f.name, handle: f.name.toLowerCase().replace(/[^a-z0-9]+/g, ""), city: f.city, bio: f.about, avatar: IMAGES.gym },
+      { email: f.email, password: f.password, name: f.name, ownerName: f.owner, handle: f.name.toLowerCase().replace(/[^a-z0-9]+/g, ""), city: f.city, bio: f.about, avatar: IMAGES.gym },
       { name: f.name, city: f.city, address: f.address, image: IMAGES.gym, priceFrom: Number(f.priceFrom) || 0, facilities: fac, timings: f.timings, phone: f.phone, about: f.about || `${f.name} in ${f.city}.` },
     );
     if (typeof r === "string") { toast.error(r); setStep(0); return; }

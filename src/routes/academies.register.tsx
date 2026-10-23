@@ -26,7 +26,7 @@ function AcademyRegister() {
   const submit = () => {
     const img = imageFor(f.sport);
     const r = registerAcademy(
-      { email: f.email, password: f.password, name: f.name, handle: f.name.toLowerCase().replace(/[^a-z0-9]+/g, ""), city: f.city, bio: f.about, avatar: img },
+      { email: f.email, password: f.password, name: f.name, ownerName: f.owner, handle: f.name.toLowerCase().replace(/[^a-z0-9]+/g, ""), city: f.city, bio: f.about, avatar: img },
       { name: f.name, sport: f.sport, city: f.city, address: f.address, image: img, ageGroups: f.ageGroups, feeFrom: Number(f.feeFrom) || 0, coaches: Number(f.coaches) || 0, about: f.about || `${f.sport} academy in ${f.city}.`, phone: f.phone },
     );
     if (typeof r === "string") { toast.error(r); setStep(0); return; }

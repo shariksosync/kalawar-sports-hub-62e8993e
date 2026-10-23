@@ -53,7 +53,7 @@ export function AdminLayout({ kind, modules }: { kind: "gym" | "academy"; module
       <div className="min-w-0 flex-1">
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur lg:px-8">
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(true)} aria-label="Menu"><Menu /></Button>
-          <div className="text-sm text-muted-foreground">Welcome back, <span className="text-foreground">{me.name}</span></div>
+          <div className="min-w-0 px-2 text-sm text-muted-foreground">Welcome back, <span className="text-foreground">{me.ownerName ?? me.name}</span></div>
           <Button asChild variant="outline" size="sm" className="rounded-full"><Link to="/">Main site</Link></Button>
         </header>
         <div className="p-4 lg:p-8"><Outlet /></div>

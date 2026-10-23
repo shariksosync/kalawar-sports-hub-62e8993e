@@ -34,6 +34,7 @@ export interface Account {
   bio?: string;
   avatar?: string;
   partnerId?: string;
+  ownerName?: string;
   private?: boolean;
 }
 
