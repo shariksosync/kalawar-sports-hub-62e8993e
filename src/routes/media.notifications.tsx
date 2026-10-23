@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/site/PageShell";
 import { UserChip } from "@/components/media/MediaBits";
-import { respondRequest, useMe, useStore } from "@/lib/store";
+import { markNoticesRead, respondRequest, useMe, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/media/notifications")({
   head: () => ({ meta: [{ title: "Notifications — Kalawar Media" }, { name: "description", content: "Follow requests and activity on your Kalawar Media account." }, { property: "og:title", content: "Notifications — Kalawar Media" }, { property: "og:description", content: "Your Kalawar Media activity." }] }),
@@ -14,6 +15,7 @@ function Notifications() {
   const notices = useStore((s) => (me ? s.notices.filter((n) => n.to === me.id).sort((a, b) => b.at - a.at) : []));
   const requests = useStore((s) => (me ? s.follows.filter((f) => f.to === me.id && f.status === "pending") : []));
   const accounts = useStore((s) => s.accounts);
+  useEffect(() => { if (me) markNoticesRead(me.id); }, [me?.id]);
   if (!me) return <PageShell><div className="py-32 text-center"><p className="mb-4 text-muted-foreground">Sign in to see your notifications.</p><Button asChild className="rounded-full"><Link to="/media/login">Sign in</Link></Button></div></PageShell>;
   return (
     <PageShell>

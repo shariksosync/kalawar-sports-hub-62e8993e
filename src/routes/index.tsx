@@ -5,7 +5,8 @@ import { ArrowRight, ChevronLeft, ChevronRight, Dumbbell, Medal, PlayCircle, Swo
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/site/PageShell";
 import { IMAGES, KALAWAR_URL } from "@/lib/data";
-import { useStore } from "@/lib/store";
+import { canViewPosts, useStore } from "@/lib/store";
+import { PostThumbnail } from "@/components/media/PostThumbnail";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,7 +37,7 @@ function PortalBox({ p }: { p: (typeof portals)[number] }) {
     </>
   );
   const cls = "group glass relative block rounded-xl p-5 transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-gold";
-  return p.external ? <a href={p.href} target="_blank" rel="noreferrer" className={cls}>{inner}</a> : <Link to={p.to!} className={cls}>{inner}</Link>;
+  return p.external ? <a href={p.href} target="_blank" rel="noreferrer" className={cls}>{inner}</a> : p.to ? <Link to={p.to} className={cls}>{inner}</Link> : null;
 }
 
 function Slide({ image, children }: { image: string; children: React.ReactNode }) {
@@ -75,7 +76,7 @@ function Hero() {
   return (
     <section className="relative">
       <div ref={ref} className="overflow-hidden">
-        <div className="flex h-[640px]">
+        <div className="flex h-[760px] sm:h-[640px]">
           <Slide image={IMAGES.hero}>
             <div className="grid w-full items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
               <SlideText eyebrow="Welcome to Kalawar Hub" title={<>Train. Compete.<br /><span className="text-gradient-gold">Get seen.</span></>} text="One platform for martial arts championships, fitness clubs, sports academies and the athletes who make them great." cta={<><Button asChild size="lg" className="rounded-full"><Link to="/media">Explore Media</Link></Button><Button asChild size="lg" variant="outline" className="rounded-full"><Link to="/gyms/register">Become a partner</Link></Button></>} />
@@ -116,7 +117,7 @@ function Hero() {
 function Home() {
   const gyms = useStore((s) => s.gyms.slice(0, 3));
   const academies = useStore((s) => s.academies.slice(0, 3));
-  const posts = useStore((s) => s.posts.filter((p) => p.kind === "image").slice(0, 4));
+  const posts = useStore((s) => s.posts.filter((p) => p.kind === "image" && canViewPosts(s, p.authorId, s.sessionId)).slice(0, 4));
   const stats = [
     { icon: Users, n: "25K+", l: "Registered athletes" },
     { icon: Dumbbell, n: "120+", l: "Partner gyms" },
@@ -166,7 +167,7 @@ function Home() {
       <Section eyebrow="Trending on Media" title="Moments from the community" to="/media">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {posts.map((p) => (
-            <Link key={p.id} to="/media" className="group overflow-hidden rounded-xl"><img src={p.src} alt={p.caption} loading="lazy" className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105" /></Link>
+            <Link key={p.id} to="/media" className="group aspect-square overflow-hidden rounded-xl"><PostThumbnail post={p} /></Link>
           ))}
         </div>
       </Section>

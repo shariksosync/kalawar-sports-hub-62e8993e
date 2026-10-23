@@ -1,4 +1,5 @@
 import { useRef, useSyncExternalStore } from "react";
+import { toast } from "sonner";
 import {
   academySeed, gymSeed, seedAccounts, seedAcademies, seedFollows, seedGyms, seedPosts,
   type Academy, type Account, type Gym, type Post, type Row,
@@ -23,7 +24,7 @@ const initial = (): State => ({
   academies: seedAcademies,
   posts: seedPosts,
   follows: seedFollows,
-  notices: [{ id: "n0", to: "u-m2", from: "u-m1", text: "requested to follow you", at: Date.now() }],
+  notices: [],
   partnerData: { g1: gymSeed(), a1: academySeed("Cricket") },
   sessionId: null,
 });
@@ -35,9 +36,13 @@ const serverState = state;
 
 function emit() {
   if (typeof window !== "undefined") {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* storage full */ }
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {
+      toast.error("Changes couldn't be saved on this device. Free some storage and try again.");
+      return false;
+    }
   }
   listeners.forEach((l) => l());
+  return true;
 }
 
 export function hydrateStore() {
@@ -51,8 +56,10 @@ export function hydrateStore() {
 }
 
 export function setState(fn: (s: State) => Partial<State>) {
+  const previous = state;
   state = { ...state, ...fn(state) };
-  emit();
+  if (!emit()) { state = previous; return false; }
+  return true;
 }
 
 const subscribe = (l: () => void) => { listeners.add(l); return () => { listeners.delete(l); }; };
@@ -100,8 +107,11 @@ export function login(email: string, password: string, types?: Account["type"][]
 export function logout() { setState(() => ({ sessionId: null })); }
 
 export function registerAccount(a: Omit<Account, "id">): Account | string {
-  if (state.accounts.some((x) => x.email.toLowerCase() === a.email.toLowerCase())) return "An account with this email already exists.";
-  const acc: Account = { ...a, id: "u-" + uid() };
+  const email = a.email.trim().toLowerCase();
+  const handle = a.handle.trim().replace(/^@/, "").toLowerCase();
+  if (state.accounts.some((x) => x.email.toLowerCase() === email)) return "An account with this email already exists.";
+  if (state.accounts.some((x) => x.handle.toLowerCase() === handle)) return "This username is already taken.";
+  const acc: Account = { ...a, email, handle, id: "u-" + uid() };
   setState((s) => ({ accounts: [...s.accounts, acc], sessionId: acc.id }));
   return acc;
 }
@@ -149,10 +159,19 @@ export function toggleSubscribe(postId: string, me: string) {
   setState((s) => ({ posts: s.posts.map((p) => p.id === postId ? { ...p, subscribers: p.subscribers.includes(me) ? p.subscribers.filter((x) => x !== me) : [...p.subscribers, me] } : p) }));
 }
 export function addComment(postId: string, me: string, text: string) {
-  setState((s) => ({ posts: s.posts.map((p) => p.id === postId ? { ...p, comments: [...p.comments, { id: uid(), authorId: me, text, at: Date.now() }] } : p) }));
+  if (!text.trim()) return;
+  setState((s) => {
+    const post = s.posts.find((p) => p.id === postId);
+    if (!post) return {};
+    const recipients = [...new Set([post.authorId, ...post.subscribers])].filter((id) => id !== me);
+    return {
+      posts: s.posts.map((p) => p.id === postId ? { ...p, comments: [...p.comments, { id: uid(), authorId: me, text: text.trim(), at: Date.now() }] } : p),
+      notices: [...s.notices, ...recipients.map((to) => ({ id: uid(), to, from: me, text: "commented on a post you follow", at: Date.now() }))],
+    };
+  });
 }
 export function addPost(p: Omit<Post, "id" | "likes" | "subscribers" | "comments" | "views" | "at">) {
-  setState((s) => ({ posts: [{ ...p, id: "p-" + uid(), likes: [], subscribers: [], comments: [], views: 0, at: Date.now() }, ...s.posts] }));
+  return setState((s) => ({ posts: [{ ...p, id: "p-" + uid(), likes: [], subscribers: [], comments: [], views: 0, at: Date.now() }, ...s.posts] }));
 }
 export function deletePost(id: string) { setState((s) => ({ posts: s.posts.filter((p) => p.id !== id) })); }
 
@@ -162,6 +181,7 @@ export function followStatus(s: State, from: string, to: string) {
 /** Public accounts are followed instantly; private ones receive a follow request. */
 export function follow(me: string, target: string) {
   const t = state.accounts.find((a) => a.id === target);
+  if (!t || me === target || followStatus(state, me, target)) return;
   const status = t?.private ? "pending" : "accepted";
   setState((s) => ({
     follows: [...s.follows.filter((f) => !(f.from === me && f.to === target)), { from: me, to: target, status }],
@@ -169,7 +189,7 @@ export function follow(me: string, target: string) {
   }));
 }
 export function unfollow(me: string, target: string) {
-  setState((s) => ({ follows: s.follows.filter((f) => !(f.from === me && f.to === target)) }));
+  setState((s) => ({ follows: s.follows.filter((f) => !(f.from === me && f.to === target)), notices: s.notices.filter((n) => !(n.from === me && n.to === target && n.text.includes("requested"))) }));
 }
 export function respondRequest(me: string, from: string, accept: boolean) {
   setState((s) => ({
@@ -179,4 +199,22 @@ export function respondRequest(me: string, from: string, accept: boolean) {
 }
 export function updateAccount(id: string, patch: Partial<Account>) {
   setState((s) => ({ accounts: s.accounts.map((a) => (a.id === id ? { ...a, ...patch } : a)) }));
+}
+
+export function canViewPosts(s: State, authorId: string, viewerId: string | null) {
+  const author = s.accounts.find((a) => a.id === authorId);
+  return !!author && (!author.private || viewerId === authorId || (!!viewerId && followStatus(s, viewerId, authorId) === "accepted"));
+}
+
+export function markNoticesRead(to: string) {
+  setState((s) => ({ notices: s.notices.map((n) => n.to === to ? { ...n, read: true } : n) }));
+}
+
+export function recordView(postId: string) {
+  try {
+    const key = `kalawar-view-${postId}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    setState((s) => ({ posts: s.posts.map((p) => p.id === postId ? { ...p, views: p.views + 1 } : p) }));
+  } catch { /* views are optional when device storage is unavailable */ }
 }
