@@ -10,7 +10,7 @@ import swim from "@/assets/m-swim.jpg";
 export const IMAGES = { gym, academy, champ, hero, boxing, yoga, cricket, swim };
 
 /** Address of the existing Kalawar website (separate project, used as-is). */
-export const KALAWAR_URL = "https://kalawar.in";
+export const KALAWAR_URL = "https://www.kalawarsmfi.com/";
 
 export type AccountType = "media" | "gym" | "academy" | "kalawar";
 export const KALAWAR_ROLES = [
