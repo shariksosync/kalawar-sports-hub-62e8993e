@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Shared client store (src/lib/store.ts) returns shallow-equal cached selector results; keeps useSyncExternalStore from looping when selectors build new arrays.
+- Demo uses mock data persisted in localStorage, no backend; keeps the demo self-contained.
