@@ -57,20 +57,27 @@ export function setState(fn: (s: State) => Partial<State>) {
 
 const subscribe = (l: () => void) => { listeners.add(l); return () => { listeners.delete(l); }; };
 
+function shallowEq(a: unknown, b: unknown): boolean {
+  if (Object.is(a, b)) return true;
+  if (!a || !b || typeof a !== "object" || typeof b !== "object") return false;
+  if (Array.isArray(a) !== Array.isArray(b)) return false;
+  const ka = Object.keys(a), kb = Object.keys(b);
+  if (ka.length !== kb.length) return false;
+  return ka.every((k) => Object.is((a as Record<string, unknown>)[k], (b as Record<string, unknown>)[k]));
+}
+
 export function useStore<T>(sel: (s: State) => T): T {
-  const cache = useRef<{ s?: State; v?: T; ss?: State; sv?: T }>({});
-  const selRef = useRef(sel);
-  selRef.current = sel;
+  const cache = useRef<{ v?: T; sv?: T; has?: boolean; shas?: boolean }>({});
   return useSyncExternalStore(
     subscribe,
     () => {
-      const c = cache.current;
-      if (c.s !== state) { c.s = state; c.v = selRef.current(state); }
+      const c = cache.current; const v = sel(state);
+      if (!c.has || !shallowEq(c.v, v)) { c.v = v; c.has = true; }
       return c.v as T;
     },
     () => {
-      const c = cache.current;
-      if (c.ss !== serverState) { c.ss = serverState; c.sv = selRef.current(serverState); }
+      const c = cache.current; const v = sel(serverState);
+      if (!c.shas || !shallowEq(c.sv, v)) { c.sv = v; c.shas = true; }
       return c.sv as T;
     },
   );
