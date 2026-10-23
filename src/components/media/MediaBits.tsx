@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Heart, MessageCircle, BellRing, Eye, Trash2, Lock, Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { Account, Post } from "@/lib/data";
-import { addComment, deletePost, follow, followStatus, toggleLike, toggleSubscribe, unfollow, useMe, useStore } from "@/lib/store";
+import { addComment, deletePost, follow, followStatus, toggleLike, toggleSubscribe, unfollow, useMe, useStore, recordView } from "@/lib/store";
+import { useMediaSource } from "@/lib/media-storage";
 
 // ---- "please register first" gate for guests ----
 let gate: string | null = null;
@@ -73,16 +74,26 @@ export function PostCard({ post }: { post: Post }) {
   const accounts = useStore((s) => s.accounts);
   const [text, setText] = useState("");
   const [showAll, setShowAll] = useState(false);
+  const source = useMediaSource(post.src);
+  const article = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!article.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) { recordView(post.id); observer.disconnect(); }
+    }, { threshold: 0.5 });
+    observer.observe(article.current);
+    return () => observer.disconnect();
+  }, [post.id]);
   if (!author) return null;
   const liked = !!me && post.likes.includes(me.id);
   const subbed = !!me && post.subscribers.includes(me.id);
   const comments = showAll ? post.comments : post.comments.slice(-2);
   return (
-    <article className="overflow-hidden rounded-2xl border border-border bg-card">
+    <article ref={article} className="overflow-hidden rounded-2xl border border-border bg-card">
       <div className="flex items-center justify-between p-4"><UserChip a={author} sub={`${typeLabel(author)} · ${ago(post.at)}`} /><div className="flex items-center gap-2"><FollowButton target={author} />{me?.id === author.id && <Button size="icon" variant="ghost" aria-label="Delete post" onClick={() => { deletePost(post.id); toast("Post deleted"); }}><Trash2 className="h-4 w-4" /></Button>}</div></div>
-      {post.kind === "video" ? <video src={post.src} poster={post.poster} controls playsInline className="aspect-video w-full bg-sidebar object-cover" /> : <img src={post.src} alt={post.caption} loading="lazy" className="aspect-square w-full object-cover" />}
+      {post.kind === "video" ? <video src={source || undefined} poster={post.poster} controls playsInline className="aspect-video w-full bg-sidebar object-cover" /> : <img src={source || undefined} alt={post.caption} loading="lazy" className="aspect-square w-full object-cover" />}
       <div className="space-y-3 p-4">
-        <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <Button size="sm" variant="ghost" onClick={() => guard("like posts", (id) => toggleLike(post.id, id))} className={liked ? "text-primary" : ""}><Heart className={`mr-1 h-5 w-5 ${liked ? "fill-current" : ""}`} />{post.likes.length}</Button>
           <Button size="sm" variant="ghost" onClick={() => guard("comment", () => document.getElementById(`c-${post.id}`)?.focus())}><MessageCircle className="mr-1 h-5 w-5" />{post.comments.length}</Button>
           <Button size="sm" variant="ghost" onClick={() => guard("subscribe to posts", (id) => { toggleSubscribe(post.id, id); toast.success(subbed ? "Unsubscribed" : "Subscribed — you'll get updates"); })} className={subbed ? "text-primary" : ""}><BellRing className={`mr-1 h-5 w-5 ${subbed ? "fill-current" : ""}`} />{subbed ? "Subscribed" : "Subscribe"}</Button>

@@ -36,7 +36,7 @@ export function SiteNav() {
   const me = useMe();
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
-  const unread = useStore((s) => (me ? s.notices.filter((n) => n.to === me.id).length : 0));
+  const unread = useStore((s) => (me ? s.notices.filter((n) => n.to === me.id && !n.read).length : 0));
   const panel = me?.type === "gym" ? "/gym-admin" : me?.type === "academy" ? "/academy-admin" : null;
 
   return (

@@ -11,3 +11,4 @@
 
 - Shared client store (src/lib/store.ts) returns shallow-equal cached selector results; keeps useSyncExternalStore from looping when selectors build new arrays.
 - Demo uses mock data persisted in localStorage, no backend; keeps the demo self-contained.
+- Uploaded media blobs live in browser IndexedDB and posts store stable media keys; preserves photos and videos across reloads without filling localStorage.

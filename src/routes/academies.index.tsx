@@ -8,7 +8,7 @@ import { IMAGES } from "@/lib/data";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/academies/")({
-  head: () => ({ meta: [{ title: "Sports Academies — Kalawar Hub" }, { name: "description", content: "Browse registered sports academies by sport and city, or register your academy as a partner." }, { property: "og:title", content: "Sports Academies — Kalawar Hub" }, { property: "og:description", content: "Find academies with certified coaches." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Sports Academies — Kalawar Hub" }, { name: "description", content: "Browse registered sports academies by sport and city, or register your academy as a partner." }, { property: "og:title", content: "Sports Academies — Kalawar Hub" }, { property: "og:description", content: "Find academies with certified coaches." }] }),
   component: AcademyList,
 });
 

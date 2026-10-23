@@ -1,12 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Clock, Star, Check } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/site/PageShell";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/gyms/$id")({
-  head: () => ({ meta: [{ title: "Gym details — Kalawar Hub" }, { name: "description", content: "Facilities, timings and membership plans for this gym." }, { property: "og:title", content: "Gym details — Kalawar Hub" }, { property: "og:description", content: "Facilities, timings and membership plans." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Gym details — Kalawar Hub" }, { name: "description", content: "Facilities, timings and membership plans for this gym." }, { property: "og:title", content: "Gym details — Kalawar Hub" }, { property: "og:description", content: "Facilities, timings and membership plans." }] }),
   component: GymDetail,
 });
 
@@ -30,7 +29,7 @@ function GymDetail() {
           <aside className="glass h-fit rounded-2xl p-6">
             <div className="text-sm text-muted-foreground">Memberships from</div>
             <div className="font-display text-5xl text-primary">₹{g.priceFrom.toLocaleString("en-IN")}<span className="text-base text-muted-foreground">/mo</span></div>
-            <Button size="lg" className="mt-6 w-full rounded-full" onClick={() => toast.success("Enquiry sent! The gym will call you shortly.")}>Book a free trial</Button>
+            <Button asChild size="lg" className="mt-6 w-full rounded-full"><a href={`tel:${g.phone}`}>Call for a free trial</a></Button>
             <a href={`tel:${g.phone}`} className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground"><Phone className="h-4 w-4" />{g.phone}</a>
           </aside>
         </div>

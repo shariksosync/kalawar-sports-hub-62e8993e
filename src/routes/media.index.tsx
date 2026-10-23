@@ -5,17 +5,18 @@ import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/site/PageShell";
 import { AuthGate, FollowButton, PostCard, UserChip, useGuard } from "@/components/media/MediaBits";
 import { UploadDialog } from "@/components/media/UploadDialog";
-import { useMe, useStore } from "@/lib/store";
+import { canViewPosts, useMe, useStore } from "@/lib/store";
+import { PostThumbnail } from "@/components/media/PostThumbnail";
 
 export const Route = createFileRoute("/media/")({
-  head: () => ({ meta: [{ title: "Media — Kalawar Hub" }, { name: "description", content: "Watch training clips and match highlights, follow athletes, gyms and academies." }, { property: "og:title", content: "Kalawar Media" }, { property: "og:description", content: "Videos and photos from the sports community." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Media — Kalawar Hub" }, { name: "description", content: "Watch training clips and match highlights, follow athletes, gyms and academies." }, { property: "og:title", content: "Kalawar Media" }, { property: "og:description", content: "Videos and photos from the sports community." }] }),
   component: MediaHome,
 });
 
 function MediaHome() {
   const me = useMe();
   const guard = useGuard();
-  const posts = useStore((s) => s.posts);
+  const posts = useStore((s) => s.posts.filter((p) => canViewPosts(s, p.authorId, s.sessionId)));
   const accounts = useStore((s) => s.accounts);
   const [view, setView] = useState<"feed" | "grid">("feed");
   const [filter, setFilter] = useState<"all" | "video" | "image" | "following">("all");
@@ -48,7 +49,7 @@ function MediaHome() {
             <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
               {list.map((p) => (
                 <Link key={p.id} to="/media/u/$id" params={{ id: p.authorId }} className="group relative aspect-square overflow-hidden rounded-lg">
-                  <img src={p.kind === "video" ? p.poster ?? "" : p.src} alt={p.caption} loading="lazy" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                  <PostThumbnail post={p} />
                   {p.kind === "video" && <PlayCircle className="absolute right-2 top-2 h-6 w-6 text-foreground" />}
                 </Link>
               ))}

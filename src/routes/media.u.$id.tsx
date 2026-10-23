@@ -12,9 +12,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { PageShell } from "@/components/site/PageShell";
 import { AuthGate, FollowButton, PostCard, UserChip, typeLabel } from "@/components/media/MediaBits";
 import { updateAccount, useMe, useStore, followStatus } from "@/lib/store";
+import { PostThumbnail } from "@/components/media/PostThumbnail";
 
 export const Route = createFileRoute("/media/u/$id")({
-  head: () => ({ meta: [{ title: "Profile — Kalawar Media" }, { name: "description", content: "Athlete profile, posts, followers and following on Kalawar Media." }, { property: "og:title", content: "Profile — Kalawar Media" }, { property: "og:description", content: "Athlete profile on Kalawar Media." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Profile — Kalawar Media" }, { name: "description", content: "Athlete profile, posts, followers and following on Kalawar Media." }, { property: "og:title", content: "Profile — Kalawar Media" }, { property: "og:description", content: "Athlete profile on Kalawar Media." }] }),
   component: Profile,
 });
 
@@ -32,7 +33,7 @@ function Profile() {
   if (!user) return <PageShell><div className="py-32 text-center">Profile not found. <Link to="/media" className="text-primary">Back to Media</Link></div></PageShell>;
   const followers = follows.filter((f) => f.to === id && f.status === "accepted").map((f) => f.from);
   const following = follows.filter((f) => f.from === id && f.status === "accepted").map((f) => f.to);
-  const people = (list === "followers" ? followers : following).map((x) => accounts.find((a) => a.id === x)!).filter(Boolean);
+  const people = (list === "followers" ? followers : following).flatMap((x) => { const account = accounts.find((a) => a.id === x); return account ? [account] : []; });
   const openPost = posts.find((p) => p.id === open);
 
   return (
@@ -51,7 +52,7 @@ function Profile() {
         </div>
         <div className="mt-10 border-t border-border pt-6">
           {canSee ? (
-            posts.length ? <div className="grid grid-cols-3 gap-2">{posts.map((p) => <button key={p.id} onClick={() => setOpen(p.id)} className="group relative aspect-square overflow-hidden rounded-lg"><img src={p.kind === "video" ? p.poster ?? "" : p.src} alt={p.caption} loading="lazy" className="h-full w-full bg-muted object-cover transition-transform group-hover:scale-105" />{p.kind === "video" && <PlayCircle className="absolute right-2 top-2 h-6 w-6" />}</button>)}</div>
+            posts.length ? <div className="grid grid-cols-3 gap-2">{posts.map((p) => <button key={p.id} onClick={() => setOpen(p.id)} className="group relative aspect-square overflow-hidden rounded-lg"><PostThumbnail post={p} />{p.kind === "video" && <PlayCircle className="absolute right-2 top-2 h-6 w-6" />}</button>)}</div>
               : <p className="py-16 text-center text-muted-foreground">No posts yet.</p>
           ) : (
             <div className="py-16 text-center"><Lock className="mx-auto mb-3 h-10 w-10 text-primary" /><div className="font-display text-3xl">This account is private</div><p className="text-sm text-muted-foreground">Send a follow request to see their posts.</p></div>
@@ -66,14 +67,15 @@ function Profile() {
       <Dialog open={!!openPost} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent className="max-w-lg p-0">{openPost && <PostCard post={openPost} />}</DialogContent>
       </Dialog>
-      {me?.id === id && <EditProfile open={editing} onOpenChange={setEditing} />}
+      {me?.id === id && editing && <EditProfile open={editing} onOpenChange={setEditing} />}
     </PageShell>
   );
 }
 
 function EditProfile({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
-  const me = useMe()!;
-  const [f, setF] = useState({ name: me.name, bio: me.bio ?? "", city: me.city ?? "", private: !!me.private });
+  const me = useMe();
+  const [f, setF] = useState({ name: me?.name ?? "", bio: me?.bio ?? "", city: me?.city ?? "", private: !!me?.private });
+  if (!me) return null;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent><DialogHeader><DialogTitle className="font-display text-3xl tracking-wide">Edit profile</DialogTitle></DialogHeader>
