@@ -10,33 +10,337 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcademyAdminRouteImport } from './routes/academy-admin'
+import { Route as GymAdminRouteImport } from './routes/gym-admin'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AcademiesIndexRouteImport } from './routes/academies.index'
+import { Route as AcademiesIdRouteImport } from './routes/academies.$id'
+import { Route as AcademiesLoginRouteImport } from './routes/academies.login'
+import { Route as AcademiesRegisterRouteImport } from './routes/academies.register'
+import { Route as AcademyAdminIndexRouteImport } from './routes/academy-admin.index'
+import { Route as AcademyAdminModuleRouteImport } from './routes/academy-admin.$module'
+import { Route as AcademyAdminReportsRouteImport } from './routes/academy-admin.reports'
+import { Route as AcademyAdminSettingsRouteImport } from './routes/academy-admin.settings'
+import { Route as GymAdminIndexRouteImport } from './routes/gym-admin.index'
+import { Route as GymAdminModuleRouteImport } from './routes/gym-admin.$module'
+import { Route as GymAdminReportsRouteImport } from './routes/gym-admin.reports'
+import { Route as GymAdminSettingsRouteImport } from './routes/gym-admin.settings'
+import { Route as GymsIndexRouteImport } from './routes/gyms.index'
+import { Route as GymsIdRouteImport } from './routes/gyms.$id'
+import { Route as GymsLoginRouteImport } from './routes/gyms.login'
+import { Route as GymsRegisterRouteImport } from './routes/gyms.register'
+import { Route as MediaIndexRouteImport } from './routes/media.index'
+import { Route as MediaLoginRouteImport } from './routes/media.login'
+import { Route as MediaNotificationsRouteImport } from './routes/media.notifications'
+import { Route as MediaRegisterRouteImport } from './routes/media.register'
+import { Route as MediaUIdRouteImport } from './routes/media.u.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcademyAdminRoute = AcademyAdminRouteImport.update({
+  id: '/academy-admin',
+  path: '/academy-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GymAdminRoute = GymAdminRouteImport.update({
+  id: '/gym-admin',
+  path: '/gym-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademiesIndexRoute = AcademiesIndexRouteImport.update({
+  id: '/academies/',
+  path: '/academies/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademiesIdRoute = AcademiesIdRouteImport.update({
+  id: '/academies/$id',
+  path: '/academies/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademiesLoginRoute = AcademiesLoginRouteImport.update({
+  id: '/academies/login',
+  path: '/academies/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademiesRegisterRoute = AcademiesRegisterRouteImport.update({
+  id: '/academies/register',
+  path: '/academies/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademyAdminIndexRoute = AcademyAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AcademyAdminRoute,
+} as any)
+const AcademyAdminModuleRoute = AcademyAdminModuleRouteImport.update({
+  id: '/$module',
+  path: '/$module',
+  getParentRoute: () => AcademyAdminRoute,
+} as any)
+const AcademyAdminReportsRoute = AcademyAdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AcademyAdminRoute,
+} as any)
+const AcademyAdminSettingsRoute = AcademyAdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AcademyAdminRoute,
+} as any)
+const GymAdminIndexRoute = GymAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GymAdminRoute,
+} as any)
+const GymAdminModuleRoute = GymAdminModuleRouteImport.update({
+  id: '/$module',
+  path: '/$module',
+  getParentRoute: () => GymAdminRoute,
+} as any)
+const GymAdminReportsRoute = GymAdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => GymAdminRoute,
+} as any)
+const GymAdminSettingsRoute = GymAdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => GymAdminRoute,
+} as any)
+const GymsIndexRoute = GymsIndexRouteImport.update({
+  id: '/gyms/',
+  path: '/gyms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GymsIdRoute = GymsIdRouteImport.update({
+  id: '/gyms/$id',
+  path: '/gyms/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GymsLoginRoute = GymsLoginRouteImport.update({
+  id: '/gyms/login',
+  path: '/gyms/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GymsRegisterRoute = GymsRegisterRouteImport.update({
+  id: '/gyms/register',
+  path: '/gyms/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaIndexRoute = MediaIndexRouteImport.update({
+  id: '/media/',
+  path: '/media/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaLoginRoute = MediaLoginRouteImport.update({
+  id: '/media/login',
+  path: '/media/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaNotificationsRoute = MediaNotificationsRouteImport.update({
+  id: '/media/notifications',
+  path: '/media/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaRegisterRoute = MediaRegisterRouteImport.update({
+  id: '/media/register',
+  path: '/media/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaUIdRoute = MediaUIdRouteImport.update({
+  id: '/media/u/$id',
+  path: '/media/u/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/academy-admin': typeof AcademyAdminRouteWithChildren
+  '/gym-admin': typeof GymAdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/academies/$id': typeof AcademiesIdRoute
+  '/academies/login': typeof AcademiesLoginRoute
+  '/academies/register': typeof AcademiesRegisterRoute
+  '/academy-admin/$module': typeof AcademyAdminModuleRoute
+  '/academy-admin/reports': typeof AcademyAdminReportsRoute
+  '/academy-admin/settings': typeof AcademyAdminSettingsRoute
+  '/gym-admin/$module': typeof GymAdminModuleRoute
+  '/gym-admin/reports': typeof GymAdminReportsRoute
+  '/gym-admin/settings': typeof GymAdminSettingsRoute
+  '/gyms/$id': typeof GymsIdRoute
+  '/gyms/login': typeof GymsLoginRoute
+  '/gyms/register': typeof GymsRegisterRoute
+  '/media/login': typeof MediaLoginRoute
+  '/media/notifications': typeof MediaNotificationsRoute
+  '/media/register': typeof MediaRegisterRoute
+  '/academies/': typeof AcademiesIndexRoute
+  '/academy-admin/': typeof AcademyAdminIndexRoute
+  '/gym-admin/': typeof GymAdminIndexRoute
+  '/gyms/': typeof GymsIndexRoute
+  '/media/': typeof MediaIndexRoute
+  '/media/u/$id': typeof MediaUIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/academies/$id': typeof AcademiesIdRoute
+  '/academies/login': typeof AcademiesLoginRoute
+  '/academies/register': typeof AcademiesRegisterRoute
+  '/academy-admin/$module': typeof AcademyAdminModuleRoute
+  '/academy-admin/reports': typeof AcademyAdminReportsRoute
+  '/academy-admin/settings': typeof AcademyAdminSettingsRoute
+  '/gym-admin/$module': typeof GymAdminModuleRoute
+  '/gym-admin/reports': typeof GymAdminReportsRoute
+  '/gym-admin/settings': typeof GymAdminSettingsRoute
+  '/gyms/$id': typeof GymsIdRoute
+  '/gyms/login': typeof GymsLoginRoute
+  '/gyms/register': typeof GymsRegisterRoute
+  '/media/login': typeof MediaLoginRoute
+  '/media/notifications': typeof MediaNotificationsRoute
+  '/media/register': typeof MediaRegisterRoute
+  '/academies': typeof AcademiesIndexRoute
+  '/academy-admin': typeof AcademyAdminIndexRoute
+  '/gym-admin': typeof GymAdminIndexRoute
+  '/gyms': typeof GymsIndexRoute
+  '/media': typeof MediaIndexRoute
+  '/media/u/$id': typeof MediaUIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/academy-admin': typeof AcademyAdminRouteWithChildren
+  '/gym-admin': typeof GymAdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/academies/$id': typeof AcademiesIdRoute
+  '/academies/login': typeof AcademiesLoginRoute
+  '/academies/register': typeof AcademiesRegisterRoute
+  '/academy-admin/$module': typeof AcademyAdminModuleRoute
+  '/academy-admin/reports': typeof AcademyAdminReportsRoute
+  '/academy-admin/settings': typeof AcademyAdminSettingsRoute
+  '/gym-admin/$module': typeof GymAdminModuleRoute
+  '/gym-admin/reports': typeof GymAdminReportsRoute
+  '/gym-admin/settings': typeof GymAdminSettingsRoute
+  '/gyms/$id': typeof GymsIdRoute
+  '/gyms/login': typeof GymsLoginRoute
+  '/gyms/register': typeof GymsRegisterRoute
+  '/media/login': typeof MediaLoginRoute
+  '/media/notifications': typeof MediaNotificationsRoute
+  '/media/register': typeof MediaRegisterRoute
+  '/academies/': typeof AcademiesIndexRoute
+  '/academy-admin/': typeof AcademyAdminIndexRoute
+  '/gym-admin/': typeof GymAdminIndexRoute
+  '/gyms/': typeof GymsIndexRoute
+  '/media/': typeof MediaIndexRoute
+  '/media/u/$id': typeof MediaUIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/academy-admin'
+    | '/gym-admin'
+    | '/login'
+    | '/academies/$id'
+    | '/academies/login'
+    | '/academies/register'
+    | '/academy-admin/$module'
+    | '/academy-admin/reports'
+    | '/academy-admin/settings'
+    | '/gym-admin/$module'
+    | '/gym-admin/reports'
+    | '/gym-admin/settings'
+    | '/gyms/$id'
+    | '/gyms/login'
+    | '/gyms/register'
+    | '/media/login'
+    | '/media/notifications'
+    | '/media/register'
+    | '/academies/'
+    | '/academy-admin/'
+    | '/gym-admin/'
+    | '/gyms/'
+    | '/media/'
+    | '/media/u/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/academies/$id'
+    | '/academies/login'
+    | '/academies/register'
+    | '/academy-admin/$module'
+    | '/academy-admin/reports'
+    | '/academy-admin/settings'
+    | '/gym-admin/$module'
+    | '/gym-admin/reports'
+    | '/gym-admin/settings'
+    | '/gyms/$id'
+    | '/gyms/login'
+    | '/gyms/register'
+    | '/media/login'
+    | '/media/notifications'
+    | '/media/register'
+    | '/academies'
+    | '/academy-admin'
+    | '/gym-admin'
+    | '/gyms'
+    | '/media'
+    | '/media/u/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/academy-admin'
+    | '/gym-admin'
+    | '/login'
+    | '/academies/$id'
+    | '/academies/login'
+    | '/academies/register'
+    | '/academy-admin/$module'
+    | '/academy-admin/reports'
+    | '/academy-admin/settings'
+    | '/gym-admin/$module'
+    | '/gym-admin/reports'
+    | '/gym-admin/settings'
+    | '/gyms/$id'
+    | '/gyms/login'
+    | '/gyms/register'
+    | '/media/login'
+    | '/media/notifications'
+    | '/media/register'
+    | '/academies/'
+    | '/academy-admin/'
+    | '/gym-admin/'
+    | '/gyms/'
+    | '/media/'
+    | '/media/u/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcademyAdminRoute: typeof AcademyAdminRouteWithChildren
+  GymAdminRoute: typeof GymAdminRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  AcademiesIdRoute: typeof AcademiesIdRoute
+  AcademiesLoginRoute: typeof AcademiesLoginRoute
+  AcademiesRegisterRoute: typeof AcademiesRegisterRoute
+  GymsIdRoute: typeof GymsIdRoute
+  GymsLoginRoute: typeof GymsLoginRoute
+  GymsRegisterRoute: typeof GymsRegisterRoute
+  MediaLoginRoute: typeof MediaLoginRoute
+  MediaNotificationsRoute: typeof MediaNotificationsRoute
+  MediaRegisterRoute: typeof MediaRegisterRoute
+  AcademiesIndexRoute: typeof AcademiesIndexRoute
+  GymsIndexRoute: typeof GymsIndexRoute
+  MediaIndexRoute: typeof MediaIndexRoute
+  MediaUIdRoute: typeof MediaUIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +352,231 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/academy-admin': {
+      id: '/academy-admin'
+      path: '/academy-admin'
+      fullPath: '/academy-admin'
+      preLoaderRoute: typeof AcademyAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gym-admin': {
+      id: '/gym-admin'
+      path: '/gym-admin'
+      fullPath: '/gym-admin'
+      preLoaderRoute: typeof GymAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academies/': {
+      id: '/academies/'
+      path: '/academies'
+      fullPath: '/academies/'
+      preLoaderRoute: typeof AcademiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academies/$id': {
+      id: '/academies/$id'
+      path: '/academies/$id'
+      fullPath: '/academies/$id'
+      preLoaderRoute: typeof AcademiesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academies/login': {
+      id: '/academies/login'
+      path: '/academies/login'
+      fullPath: '/academies/login'
+      preLoaderRoute: typeof AcademiesLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academies/register': {
+      id: '/academies/register'
+      path: '/academies/register'
+      fullPath: '/academies/register'
+      preLoaderRoute: typeof AcademiesRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academy-admin/': {
+      id: '/academy-admin/'
+      path: '/'
+      fullPath: '/academy-admin/'
+      preLoaderRoute: typeof AcademyAdminIndexRouteImport
+      parentRoute: typeof AcademyAdminRoute
+    }
+    '/academy-admin/$module': {
+      id: '/academy-admin/$module'
+      path: '/$module'
+      fullPath: '/academy-admin/$module'
+      preLoaderRoute: typeof AcademyAdminModuleRouteImport
+      parentRoute: typeof AcademyAdminRoute
+    }
+    '/academy-admin/reports': {
+      id: '/academy-admin/reports'
+      path: '/reports'
+      fullPath: '/academy-admin/reports'
+      preLoaderRoute: typeof AcademyAdminReportsRouteImport
+      parentRoute: typeof AcademyAdminRoute
+    }
+    '/academy-admin/settings': {
+      id: '/academy-admin/settings'
+      path: '/settings'
+      fullPath: '/academy-admin/settings'
+      preLoaderRoute: typeof AcademyAdminSettingsRouteImport
+      parentRoute: typeof AcademyAdminRoute
+    }
+    '/gym-admin/': {
+      id: '/gym-admin/'
+      path: '/'
+      fullPath: '/gym-admin/'
+      preLoaderRoute: typeof GymAdminIndexRouteImport
+      parentRoute: typeof GymAdminRoute
+    }
+    '/gym-admin/$module': {
+      id: '/gym-admin/$module'
+      path: '/$module'
+      fullPath: '/gym-admin/$module'
+      preLoaderRoute: typeof GymAdminModuleRouteImport
+      parentRoute: typeof GymAdminRoute
+    }
+    '/gym-admin/reports': {
+      id: '/gym-admin/reports'
+      path: '/reports'
+      fullPath: '/gym-admin/reports'
+      preLoaderRoute: typeof GymAdminReportsRouteImport
+      parentRoute: typeof GymAdminRoute
+    }
+    '/gym-admin/settings': {
+      id: '/gym-admin/settings'
+      path: '/settings'
+      fullPath: '/gym-admin/settings'
+      preLoaderRoute: typeof GymAdminSettingsRouteImport
+      parentRoute: typeof GymAdminRoute
+    }
+    '/gyms/': {
+      id: '/gyms/'
+      path: '/gyms'
+      fullPath: '/gyms/'
+      preLoaderRoute: typeof GymsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gyms/$id': {
+      id: '/gyms/$id'
+      path: '/gyms/$id'
+      fullPath: '/gyms/$id'
+      preLoaderRoute: typeof GymsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gyms/login': {
+      id: '/gyms/login'
+      path: '/gyms/login'
+      fullPath: '/gyms/login'
+      preLoaderRoute: typeof GymsLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gyms/register': {
+      id: '/gyms/register'
+      path: '/gyms/register'
+      fullPath: '/gyms/register'
+      preLoaderRoute: typeof GymsRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/': {
+      id: '/media/'
+      path: '/media'
+      fullPath: '/media/'
+      preLoaderRoute: typeof MediaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/login': {
+      id: '/media/login'
+      path: '/media/login'
+      fullPath: '/media/login'
+      preLoaderRoute: typeof MediaLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/notifications': {
+      id: '/media/notifications'
+      path: '/media/notifications'
+      fullPath: '/media/notifications'
+      preLoaderRoute: typeof MediaNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/register': {
+      id: '/media/register'
+      path: '/media/register'
+      fullPath: '/media/register'
+      preLoaderRoute: typeof MediaRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media/u/$id': {
+      id: '/media/u/$id'
+      path: '/media/u/$id'
+      fullPath: '/media/u/$id'
+      preLoaderRoute: typeof MediaUIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AcademyAdminRouteChildren {
+  AcademyAdminModuleRoute: typeof AcademyAdminModuleRoute
+  AcademyAdminReportsRoute: typeof AcademyAdminReportsRoute
+  AcademyAdminSettingsRoute: typeof AcademyAdminSettingsRoute
+  AcademyAdminIndexRoute: typeof AcademyAdminIndexRoute
+}
+
+const AcademyAdminRouteChildren: AcademyAdminRouteChildren = {
+  AcademyAdminModuleRoute: AcademyAdminModuleRoute,
+  AcademyAdminReportsRoute: AcademyAdminReportsRoute,
+  AcademyAdminSettingsRoute: AcademyAdminSettingsRoute,
+  AcademyAdminIndexRoute: AcademyAdminIndexRoute,
+}
+
+const AcademyAdminRouteWithChildren = AcademyAdminRoute._addFileChildren(
+  AcademyAdminRouteChildren,
+)
+
+interface GymAdminRouteChildren {
+  GymAdminModuleRoute: typeof GymAdminModuleRoute
+  GymAdminReportsRoute: typeof GymAdminReportsRoute
+  GymAdminSettingsRoute: typeof GymAdminSettingsRoute
+  GymAdminIndexRoute: typeof GymAdminIndexRoute
+}
+
+const GymAdminRouteChildren: GymAdminRouteChildren = {
+  GymAdminModuleRoute: GymAdminModuleRoute,
+  GymAdminReportsRoute: GymAdminReportsRoute,
+  GymAdminSettingsRoute: GymAdminSettingsRoute,
+  GymAdminIndexRoute: GymAdminIndexRoute,
+}
+
+const GymAdminRouteWithChildren = GymAdminRoute._addFileChildren(
+  GymAdminRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcademyAdminRoute: AcademyAdminRouteWithChildren,
+  GymAdminRoute: GymAdminRouteWithChildren,
+  LoginRoute: LoginRoute,
+  AcademiesIdRoute: AcademiesIdRoute,
+  AcademiesLoginRoute: AcademiesLoginRoute,
+  AcademiesRegisterRoute: AcademiesRegisterRoute,
+  GymsIdRoute: GymsIdRoute,
+  GymsLoginRoute: GymsLoginRoute,
+  GymsRegisterRoute: GymsRegisterRoute,
+  MediaLoginRoute: MediaLoginRoute,
+  MediaNotificationsRoute: MediaNotificationsRoute,
+  MediaRegisterRoute: MediaRegisterRoute,
+  AcademiesIndexRoute: AcademiesIndexRoute,
+  GymsIndexRoute: GymsIndexRoute,
+  MediaIndexRoute: MediaIndexRoute,
+  MediaUIdRoute: MediaUIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
